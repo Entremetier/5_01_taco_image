@@ -9,9 +9,8 @@ import java.util.Collections;
 public class TacoCloudApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(TacoCloudApplication.class, args);
 
-//      SpringApplication.run(TacoCloudApplication.class, args);
+      SpringApplication.run(TacoCloudApplication.class, args);
     }
 
 }
