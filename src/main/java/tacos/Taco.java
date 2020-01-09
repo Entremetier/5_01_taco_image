@@ -1,18 +1,26 @@
+// tag::all[]
+// tag::allButValidation[]
 package tacos;
-
-import lombok.Data;
-
+import java.util.List;
+// end::allButValidation[]
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.List;
+// tag::allButValidation[]
+import lombok.Data;
 
 @Data
 public class Taco {
 
-    @NotNull
-    @Size(min = 5, message = "Name muss mindestens 5 Zeichen besitzen")
-    private String name;
+  // end::allButValidation[]
+  @NotNull
+  @Size(min=5, message="Name muss mindestens 5 Zeichen haben")
+  // tag::allButValidation[]
+  private String name;
+  // end::allButValidation[]
+  @Size(min=1, message="Mindestens eine Zutat muss ausgewählt werden")
+  // tag::allButValidation[]
+  private List<String> ingredients;
 
-    @Size(min = 1, message = "Es muss mindestens eine Zutat ausgewählt werden")
-    private List<String> ingredients;
 }
+//end::allButValidation[]
+//tag::end[]
