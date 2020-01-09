@@ -11,16 +11,10 @@ import lombok.Data;
 @Data
 public class Taco {
 
-  // end::allButValidation[]
   @NotNull
-  @Size(min=5, message="Name muss mindestens 5 Zeichen haben")
-  // tag::allButValidation[]
+  @Size(min = 5, message = "Name muss mindestens 5 Zeichen haben")
   private String name;
-  // end::allButValidation[]
-  @Size(min=1, message="Mindestens eine Zutat muss ausgewählt werden")
-  // tag::allButValidation[]
-  private List<String> ingredients;
 
+  @Size(min = 1, message = "Es muss mindestens eine Zutat ausgewählt werden")
+  private List<String> ingredients;
 }
-//end::allButValidation[]
-//tag::end[]
