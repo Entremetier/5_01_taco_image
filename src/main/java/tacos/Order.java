@@ -1,37 +1,63 @@
 package tacos;
-
-import lombok.Data;
-import org.hibernate.validator.constraints.CreditCardNumber;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 import javax.validation.constraints.Digits;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
+import org.hibernate.validator.constraints.CreditCardNumber;
+import org.hibernate.validator.constraints.NotBlank;
+
+import lombok.Data;
+
+//tag::newFields[]
 @Data
 public class Order {
 
-    @NotBlank(message = "Namen eingeben")
-    private String name;
+    private Long id;
 
-    @NotBlank(message = "Straße eingeben")
-    private String street;
+    private Date placedAt;
 
-    @NotBlank(message = "Stadt eingeben")
-    private String city;
+//end::newFields[]
 
-    @NotBlank(message = "Bundesland eingeben")
-    private String state;
+    @NotBlank(message="Delivery name is required")
+    private String deliveryName;
 
-    @NotBlank(message = "Postleizzahl eingeben")
-    private String zip;
+    @NotBlank(message="Street is required")
+    private String deliveryStreet;
 
-    @CreditCardNumber(message = "Kreditkartennummer eingeben")
+    @NotBlank(message="City is required")
+    private String deliveryCity;
+
+    @NotBlank(message="State is required")
+    private String deliveryState;
+
+    @NotBlank(message="Zip code is required")
+    private String deliveryZip;
+
+    @CreditCardNumber(message="Not a valid credit card number")
     private String ccNumber;
 
-    @Pattern(regexp = "^(0[1-9] 1[0-2])([\\/])([1-9] [0-9])$", message = "CVV im Format MM/YY eingeben")
+    @Pattern(regexp="^(0[1-9]|1[0-2])([\\/])([1-9][0-9])$",
+            message="Must be formatted MM/YY")
     private String ccExpiration;
 
-    @Digits(integer = 3, fraction = 0, message = "CVV eingeben")
+    @Digits(integer=3, fraction=0, message="Invalid CVV")
     private String ccCVV;
 
+    private List<Taco> tacos = new ArrayList<>();
+
+    public void addDesign(Taco design) {
+        this.tacos.add(design);
+    }
+
+  /*
+// tag::newFields[]
+  ...
+
+// end::newFields[]
+   */
+//tag::newFields[]
 }
+//end::newFields[]
