@@ -32,30 +32,29 @@ public class Order implements Serializable {
 
     private Date placedAt;
 
-    //end::allButDetailProperties[]
-    @NotBlank(message="Delivery name is required")
+    @NotBlank(message="Bitte Namen angeben")
     private String deliveryName;
 
-    @NotBlank(message="Street is required")
+    @NotBlank(message="Bitte Straße angeben")
     private String deliveryStreet;
 
-    @NotBlank(message="City is required")
+    @NotBlank(message="Bitte Stadt angeben")
     private String deliveryCity;
 
-    @NotBlank(message="State is required")
+    @NotBlank(message="Bitte Bundesland angeben")
     private String deliveryState;
 
-    @NotBlank(message="Zip code is required")
+    @NotBlank(message="Bitte Postleitzahl angeben")
     private String deliveryZip;
 
-    @CreditCardNumber(message="Not a valid credit card number")
+    @CreditCardNumber(message="Bitte Kreditkartennummer angeben")
     private String ccNumber;
 
     @Pattern(regexp="^(0[1-9]|1[0-2])([\\/])([1-9][0-9])$",
-            message="Must be formatted MM/YY")
+            message="Ablaufdatum im Format MM/YY angeben")
     private String ccExpiration;
 
-    @Digits(integer=3, fraction=0, message="Invalid CVV")
+    @Digits(integer=3, fraction=0, message="Bitte CVV angeben")
     private String ccCVV;
 
   /*

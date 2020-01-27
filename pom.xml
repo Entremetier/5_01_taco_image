@@ -88,6 +88,11 @@
             <artifactId>spring-boot-starter</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+
         <!--Benötige dependency wenn mit einer jdk höher als 11 gearbeitet wird-->
         <dependency>
             <groupId>org.javassist</groupId>

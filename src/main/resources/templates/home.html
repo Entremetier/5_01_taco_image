@@ -6,9 +6,12 @@
 </head>
 
 <body>
-<h1>Welcome to...</h1>
+<h1>Willkommen bei..</h1>
 <img th:src="@{/images/TacoCloud.png}"/>
+<form method="post" th:action="@{/logout}" id="logoutForm">
+  <input type="submit" value="Logout"/>
+</form>
 
-<a th:href="@{/design}" id="design">Design a taco</a>
+<a th:href="@{/design}" id="design">Einen Taco kreieren</a>
 </body>
 </html>

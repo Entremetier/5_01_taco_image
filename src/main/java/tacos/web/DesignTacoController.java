@@ -2,6 +2,8 @@ package tacos.web;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import javax.validation.Valid;
@@ -23,29 +25,14 @@ import tacos.Taco;
 import tacos.data.IngredientRepository;
 import tacos.data.TacoRepository;
 
-//tag::injectingDesignRepository[]
-//tag::injectingIngredientRepository[]
 @Controller
 @RequestMapping("/design")
-//end::injectingIngredientRepository[]
 @SessionAttributes("order")
-//tag::injectingIngredientRepository[]
 public class DesignTacoController {
 
     private final IngredientRepository ingredientRepo;
 
-    //end::injectingIngredientRepository[]
     private TacoRepository tacoRepo;
-
-    //end::injectingDesignRepository[]
-  /*
-  //tag::injectingIngredientRepository[]
-  public DesignTacoController(IngredientRepository ingredientRepo) {
-    this.ingredientRepo = ingredientRepo;
-  }
-  //end::injectingIngredientRepository[]
-   */
-    //tag::injectingDesignRepository[]
 
     @Autowired
     public DesignTacoController(
@@ -65,14 +52,16 @@ public class DesignTacoController {
         return new Taco();
     }
 
-    //end::injectingDesignRepository[]
-
-    //tag::injectingIngredientRepository[]
-
     @GetMapping
     public String showDesignForm(Model model) {
         List<Ingredient> ingredients = new ArrayList<>();
-        ingredientRepo.findAll().forEach(i -> ingredients.add(i));
+
+        ingredientRepo.findAll().forEach(new Consumer<Ingredient>() {
+            @Override
+            public void accept(Ingredient ingredient) {
+                ingredients.add(ingredient);
+            }
+        });
 
         Type[] types = Ingredient.Type.values();
         for (Type type : types) {
@@ -82,47 +71,33 @@ public class DesignTacoController {
 
         return "design";
     }
-    //end::injectingIngredientRepository[]
 
-    //tag::injectingDesignRepository[]
     @PostMapping
     public String processDesign(
-            @Valid Taco taco, Errors errors,
+            @Valid Taco design, Errors errors,
             @ModelAttribute Order order) {
 
         if (errors.hasErrors()) {
             return "design";
         }
 
-        Taco saved = tacoRepo.save(taco);
+        Taco saved = tacoRepo.save(design);
         order.addDesign(saved);
 
         return "redirect:/orders/current";
     }
 
-//end::injectingDesignRepository[]
-
     private List<Ingredient> filterByType(
             List<Ingredient> ingredients, Type type) {
         return ingredients
                 .stream()
-                .filter(x -> x.getType().equals(type))
+                .filter(new Predicate<Ingredient>() {
+                    @Override
+                    public boolean test(Ingredient x) {
+                        return x.getType().equals(type);
+                    }
+                })
                 .collect(Collectors.toList());
     }
 
-  /*
-  //tag::injectingDesignRepository[]
-  //tag::injectingIngredientRepository[]
-
-   ...
-  //end::injectingIngredientRepository[]
-  //end::injectingDesignRepository[]
-  */
-
-//tag::injectingDesignRepository[]
-//tag::injectingIngredientRepository[]
-
 }
-//end::injectingIngredientRepository[]
-//end::injectingDesignRepository[]
-
