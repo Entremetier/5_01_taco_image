@@ -9,36 +9,36 @@
 <h1>Register</h1>
 <img th:src="@{/images/TacoCloud.png}"/>
 
-<form method="post" th:action="@{/register}" id="registerForm">
+<form method="POST" th:action="@{/register}" id="registerForm">
 
-    <label for="username">Username: </label>
+    <label for="username">Benutzername: </label>
     <input type="text" name="username"/><br/>
 
-    <label for="password">Password: </label>
-    <input type="text" name="password"/><br/>
+    <label for="password">Passwort: </label>
+    <input type="password" name="password"/><br/>
 
-    <label for="confirm">Confirm password: </label>
-    <input type="text" name="confirm"/><br/>
+    <label for="confirm">Passwort bestätigen: </label>
+    <input type="password" name="confirm"/><br/>
 
-    <label for="fullname">Full name: </label>
+    <label for="fullname">Vor- und Nachname: </label>
     <input type="text" name="fullname"/><br/>
 
-    <label for="street">Street: </label>
+    <label for="street">Straße: </label>
     <input type="text" name="street"/><br/>
 
-    <label for="city">City: </label>
+    <label for="city">Stadt: </label>
     <input type="text" name="city"/><br/>
 
-    <label for="state">State: </label>
+    <label for="state">Bundesland: </label>
     <input type="text" name="state"/><br/>
 
-    <label for="zip">Zip: </label>
+    <label for="zip">Postleitzahl: </label>
     <input type="text" name="zip"/><br/>
 
-    <label for="phone">Phone: </label>
+    <label for="phone">Telefon: </label>
     <input type="text" name="phone"/><br/>
 
-    <input type="submit" value="Register"/>
+    <input type="submit" value="Registrieren"/>
 </form>
 
 </body>

@@ -6,21 +6,24 @@
     <title>Taco Cloud</title>
 </head>
 <body>
+
 <h1>Login</h1>
 <img th:src="@{/images/TacoCloud.png}"/>
 
 <div th:if="${error}">
-    Unable to login. Check your username and password.
+    Login nicht möglich, Benutzername und Passwort kontrollieren.
 </div>
 
-<p> New here? Click
-    <a th:href="@{/register}">here</a> to register.</p>
+<p> Neu hier? Klick
+    <a th:href="@{/register}">hier</a> zum registrieren.</p>
+
 
 <form method="POST" th:action="@{/login}" id="loginForm">
-    <label for="username">Username: </label>
+
+    <label for="username">Benutzername: </label>
     <input type="text" name="username" id="username"/><br/>
 
-    <lable for="password">Password:</lable>
+    <lable for="password">Passwort:</lable>
     <input type="password" name="password" id="password"/><br/>
 
     <input type="submit" value="Login"/>

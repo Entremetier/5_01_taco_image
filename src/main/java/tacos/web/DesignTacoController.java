@@ -1,5 +1,6 @@
 package tacos.web;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
@@ -8,6 +9,7 @@ import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,24 +24,31 @@ import tacos.Ingredient;
 import tacos.Ingredient.Type;
 import tacos.Order;
 import tacos.Taco;
+import tacos.User;
 import tacos.data.IngredientRepository;
 import tacos.data.TacoRepository;
+import tacos.data.UserRepository;
 
 @Controller
 @RequestMapping("/design")
 @SessionAttributes("order")
+@Slf4j
 public class DesignTacoController {
 
     private final IngredientRepository ingredientRepo;
 
     private TacoRepository tacoRepo;
 
+    private UserRepository userRepo;
+
     @Autowired
     public DesignTacoController(
             IngredientRepository ingredientRepo,
-            TacoRepository tacoRepo) {
+            TacoRepository tacoRepo,
+            UserRepository userRepo) {
         this.ingredientRepo = ingredientRepo;
         this.tacoRepo = tacoRepo;
+        this.userRepo = userRepo;
     }
 
     @ModelAttribute(name = "order")
@@ -53,15 +62,10 @@ public class DesignTacoController {
     }
 
     @GetMapping
-    public String showDesignForm(Model model) {
+    public String showDesignForm(Model model, Principal principal) {
+        log.info("   --- Designing taco");
         List<Ingredient> ingredients = new ArrayList<>();
-
-        ingredientRepo.findAll().forEach(new Consumer<Ingredient>() {
-            @Override
-            public void accept(Ingredient ingredient) {
-                ingredients.add(ingredient);
-            }
-        });
+        ingredientRepo.findAll().forEach(i -> ingredients.add(i));
 
         Type[] types = Ingredient.Type.values();
         for (Type type : types) {
@@ -69,19 +73,23 @@ public class DesignTacoController {
                     filterByType(ingredients, type));
         }
 
+        String username = principal.getName();
+        User user = userRepo.findByUsername(username);
+        model.addAttribute("user", user);
+
         return "design";
     }
 
     @PostMapping
     public String processDesign(
-            @Valid Taco design, Errors errors,
+            @Valid Taco taco, Errors errors,
             @ModelAttribute Order order) {
 
         if (errors.hasErrors()) {
             return "design";
         }
 
-        Taco saved = tacoRepo.save(design);
+        Taco saved = tacoRepo.save(taco);
         order.addDesign(saved);
 
         return "redirect:/orders/current";

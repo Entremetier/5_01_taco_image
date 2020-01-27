@@ -4,13 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.PrePersist;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
@@ -31,6 +25,9 @@ public class Order implements Serializable {
     private Long id;
 
     private Date placedAt;
+
+    @ManyToOne
+    private User user;
 
     @NotBlank(message="Bitte Namen angeben")
     private String deliveryName;
@@ -57,14 +54,6 @@ public class Order implements Serializable {
     @Digits(integer=3, fraction=0, message="Bitte CVV angeben")
     private String ccCVV;
 
-  /*
-  //tag::allButDetailProperties[]
-  ...
-
-  //end::allButDetailProperties[]
-   */
-
-    //tag::allButDetailProperties[]
     @ManyToMany(targetEntity=Taco.class)
     private List<Taco> tacos = new ArrayList<>();
 
@@ -76,6 +65,4 @@ public class Order implements Serializable {
     void placedAt() {
         this.placedAt = new Date();
     }
-
 }
-//end::allButDetailProperties[]
